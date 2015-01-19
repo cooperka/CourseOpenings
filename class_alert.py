@@ -32,18 +32,23 @@ def email(num):
 	session.quit()
 
 def website():
-	req = urllib.request.Request('http://www.lsa.umich.edu/cg/cg_sections.aspx?content=1960AMCULT219001')
+	# URL no longer works
+	base_url = 'http://www.lsa.umich.edu/cg/cg_sections.aspx'
+	params = '?content=1960AMCULT219001'
+
+	req = urllib.request.Request(url + params)
 	response = urllib.request.urlopen(req)
 	html = response.read()
 
-	m = re.search('\s\s\s\s(\d(\d?))\D\D\D\D\s\s\s\s', str(html))#'\s\s\s(\d+)\\r\\n\s\s\s', str(html))
+	# Outdated regex
+	m = re.search('\s\s\s\s(\d(\d?))\D\D\D\D\s\s\s\s', str(html))
 	#print(html)
 	#print("Found: ", m.group(1))
 
 	val = int(m.group(1))
 
 	if val >= 1:
-		print("Sending email (", val, ")...")
+		print("Sending email (", val, " spots)...")
 		email(val)
 		print("Sent.")
 
